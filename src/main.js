@@ -40,6 +40,9 @@ searchForm.addEventListener('submit', async (event) => {
             lightbox.refresh();
             loadMoreButton.style.display = 'block';
 
+            
+            
+
             if (data.totalHits <= 15) {
                 loadMoreButton.style.display = 'none';
                 showError("We're sorry, but you've reached the end of search results.");
@@ -68,6 +71,9 @@ loadMoreButton.addEventListener('click', async () => {
             const lightbox = new SimpleLightbox('.gallery a');
             lightbox.refresh();
 
+           
+            scrollToNewImages();
+
             if (data.totalHits <= currentPage * 15) {
                 loadMoreButton.style.display = 'none';
                 showError("We're sorry, but you've reached the end of search results.");
@@ -80,3 +86,16 @@ loadMoreButton.addEventListener('click', async () => {
         hideLoading();
     }
 });
+
+
+function scrollToNewImages() {
+    const galleryItems = document.querySelectorAll('.list-item');
+    if (galleryItems.length > 0) {
+        const lastItem = galleryItems[galleryItems.length - 1];
+        const { height } = lastItem.getBoundingClientRect();
+        window.scrollBy({
+            top: height * 3, 
+            behavior: 'smooth'
+        });
+    }
+}
